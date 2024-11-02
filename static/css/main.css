@@ -1,0 +1,75 @@
+* {
+    box-sizing: border-box; /* Убедитесь, что отступы и границы учитываются в ширине и высоте */
+}
+
+html, body {
+    height: 100%; /* Задаем высоту 100% для html и body */
+    margin: 0; /* Убираем отступы */
+}
+
+body {
+    display: flex;
+    font-family: Arial, sans-serif;
+}
+
+.sidebar {
+    width: 200px;
+    background: linear-gradient(to bottom, #00ff00, #008000);
+    padding: 20px;
+    color: white;
+    height: 100vh; /* Задаем высоту боковой панели на 100% высоты экрана */
+}
+
+.sidebar h1 {
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 10px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar ul li a.active {
+    font-weight: bold;
+}
+
+.main-content {
+    flex-grow: 1;
+    background: linear-gradient(to bottom, #4b0082, #800080);
+    padding: 20px;
+    color: white;
+    height: 100vh; /* Задаем высоту основного контента на 100% высоты экрана */
+    display: flex;
+    flex-direction: column; /* Позволяет располагать элементы вертикально */
+}
+
+.task-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.task-box {
+    width: 100px;
+    height: 100px;
+    background: gray;
+    border-radius: 10px;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-info {
+    margin-top: auto; /* Позволяет переместить информацию о пользователе вниз */
+}

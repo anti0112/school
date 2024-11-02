@@ -11,16 +11,19 @@
     <div class="container">
         <div class="form">
             <h1>Регистрация</h1>
-            <label for="login">Логин</label>
-            <input type="text" id="login" placeholder="Введите логин" required>
-            
-            <label for="password">Пароль</label>
-            <input type="password" id="password" placeholder="Введите пароль" required>
-            
-            <label for="confirm-password">Повтор пароля</label>
-            <input type="password" id="confirm-password" placeholder="Повторите пароль" required>
-            
-            <button type="submit">Зарегистрироваться</button>
+            <form method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+                <label for="username">Логин</label>
+                <input type="text" id="username" name="username" required>
+                
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="password">Пароль</label>
+                <input type="password" id="password" name="password" required>
+                
+                <button type="submit">Зарегистрироваться</button>
+            </form>
             <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
         </div>
     </div>
