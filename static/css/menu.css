@@ -20,20 +20,27 @@ body {
 
 .profile {
     display: flex;
-    align-items: center; /* Центрируем по вертикали */
+    flex-direction: column; /* Вертикальное расположение элементов */
+    align-items: center; /* Центрируем по горизонтали */
     margin-bottom: 20px; /* Отступ между профилем и статистикой */
 }
 
 .profile-icon {
-    width: 40px;
-    height: 40px;
+    width: 80px; /* Увеличиваем ширину кружка */
+    height: 80px; /* Увеличиваем высоту кружка */
     border-radius: 50%; /* Кружок */
     background: gray; /* Цвет фона для иконки профиля */
-    margin-right: 10px; /* Отступ между иконкой и текстом */
+    margin-bottom: 10px; /* Отступ между иконкой и текстом */
+}
+
+.user-info {
+    font-size: 18px; /* Увеличиваем размер шрифта для имени пользователя */
+    text-align: center; /* Центрируем текст */
 }
 
 .stats {
     margin-bottom: 20px; /* Отступ между статистикой и навигацией */
+    font-size: 16px; /* Увеличиваем размер шрифта для статистики */
 }
 
 .navigation {
@@ -46,6 +53,7 @@ body {
     text-decoration: none; /* Убираем подчеркивание */
     padding: 10px 0; /* Отступы для ссылок */
     transition: color 0.3s; /* Плавный переход для цвета текста */
+    font-size: 16px; /* Увеличиваем размер шрифта для ссылок */
 }
 
 .navigation a.active {
@@ -61,6 +69,7 @@ body {
     text-decoration: none;
     padding: 10px 0; /* Отступы для кнопки выхода */
     margin-top: auto; /* Отодвигает кнопку вниз */
+    font-size: 16px; /* Увеличиваем размер шрифта для кнопки выхода */
 }
 
 .main-content {
@@ -69,6 +78,8 @@ body {
     display: flex;
     flex-direction: column; /* Вертикальное расположение контента */
 }
+
+/* Остальные стили остаются без изменений */
 
 .courses-container {
     display: flex; /* Используем flexbox для расположения курсов в строку */
@@ -105,7 +116,7 @@ body {
 
 .lesson-box {
     background: rgba(255, 255, 255, 0.2); /* Полупрозрачный фон для уроков */
-    border-radius: 5px;
+    border-radius: 10px; /* Закругленные углы */
     padding: 10px;
     display: flex;
     flex-direction: column; /* Вертикальное расположение текста и квадрата */
@@ -113,10 +124,15 @@ body {
 }
 
 .image-placeholder {
-    width: 50px; /* Ширина квадрата */
-    height: 45px; /* Высота квадрата */
+    width: 100%; /* Ширина квадрата */
+    height: 100px; /* Высота квадрата */
     background: rgba(255, 255, 255, 0.5); /* Полупрозрачный фон для квадрата */
     border: 1px dashed white; /* Дашированная граница */
-    border-radius: 5px; /* Закругленные углы */
+    border-radius: 10px; /* Закругленные углы */
     margin-bottom: 5px; /* Отступ между квадратом и текстом */
+}
+
+.lesson-title {
+    text-align: center; /* Центрируем текст */
+    color: white; /* Цвет текста */
 }

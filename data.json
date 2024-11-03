@@ -1,0 +1,91 @@
+[
+    {
+        "model": "main.lesson",
+        "pk": 1,
+        "fields": {
+            "title": "Основы программирования",
+            "description": "Введение в программирование."
+        }
+    },
+    {
+        "model": "main.lesson",
+        "pk": 2,
+        "fields": {
+            "title": "Переменные и типы данных",
+            "description": "Изучение переменных и их типов."
+        }
+    },
+    {
+        "model": "main.theory",
+        "pk": 1,
+        "fields": {
+            "lesson": 1,
+            "content": "Программирование — это процесс создания программ, которые выполняют определенные задачи."
+        }
+    },
+    {
+        "model": "main.theory",
+        "pk": 2,
+        "fields": {
+            "lesson": 1,
+            "content": "Основные конструкции языка программирования: переменные, операторы, циклы."
+        }
+    },
+    {
+        "model": "main.theory",
+        "pk": 3,
+        "fields": {
+            "lesson": 2,
+            "content": "Переменные используются для хранения данных. Типы данных определяют, какие значения могут храниться в переменных."
+        }
+    },
+    {
+        "model": "main.image",
+        "pk": 1,
+        "fields": {
+            "image": "theory_images/image1.jpg"
+        }
+    },
+    {
+        "model": "main.image",
+        "pk": 2,
+        "fields": {
+            "image": "theory_images/image2.jpg"
+        }
+    },
+    {
+        "model": "main.image",
+        "pk": 3,
+        "fields": {
+            "image": "theory_images/image3.jpg"
+        }
+    },
+    {
+        "model": "main.test",
+        "pk": 1,
+        "fields": {
+            "lesson": 1,
+            "question": "Что такое программирование?",
+            "answer": [
+                {"text": "Процесс создания программ.", "is_correct": true},
+                {"text": "Процесс тестирования программ.", "is_correct": false},
+                {"text": "Процесс документирования программ.", "is_correct": false},
+                {"text": "Процесс отладки программ.", "is_correct": false}
+            ]
+        }
+    },
+    {
+        "model": "main.test",
+        "pk": 2,
+        "fields": {
+            "lesson": 2,
+            "question": "Что такое переменная?",
+            "answer": [
+                {"text": "Хранит данные.", "is_correct": true},
+                {"text": "Это функция.", "is_correct": false},
+                {"text": "Это класс.", "is_correct": false},
+                {"text": "Это метод.", "is_correct": false}
+            ]
+        }
+    }
+]

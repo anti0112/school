@@ -1,3 +1,4 @@
+<!-- main/templates/home.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
@@ -5,35 +6,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная страница</title>
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
 </head>
 <body>
-    <div class="sidebar">
-        <h1>DEV</h1>
-        <ul>
-            <li><a href="{% url 'home' %}">Главная</a></li>
-            <li><a href="#" class="active">Мои задания</a></li>
-            <li><a href="#" >Все задания</a></li>
-            <li><a href="#" >Домашнее задание</a></li>
-            <li><a href="#" >Профиль</a></li>
-        </ul>
-        <a href="#">Выход</a>
-    </div>
-    <div class="main-content">
-        <h2>Задания</h2>
-        <div class="task-container">
-            <div class="task-box"></div>
-            <div class="task-box"></div>
-            <div class="task-box"></div>
-            <div class="task-box"></div>
+    <div class="content-wrapper">
+        <div class="sidebar">
+            <div class="profile">
+                <div class="profile-icon"></div> <!-- Кружок профиля -->
+                <div class="user-info">
+                    <span>Даниил Галкина</span><br><!-- Имя пользователя -->
+                    <span style="margin-left: 10px;">EXP: 1200</span> <!-- Очки -->
+                </div>
+            </div>
+            <div class="stats">
+                <h3>Статистика задач</h3>
+                <p>Выполненные: <span class="completed">5</span></p>
+                <p>В процессе: <span class="in-progress">3</span></p>
+                <p>Просроченные: <span class="overdue">1</span></p>
+            </div>
+            <div class="navigation">
+                <a href="{% url 'home' %}" class="active">Главная</a>
+            </div>
+            <a href="#" class="logout">Выход</a> <!-- Кнопка выхода -->
         </div>
-        <div class="navigation">
-            <button class="prev">◀</button>
-            <button class="next">▶</button>
-        </div>
-        <div class="user-info">
-            <p>EXP: 1200</p>
-            <p>Даниил Галкина</p>
+        <div class="main-content">
+            <h1>Доступные темы</h1>
+            <div class="courses-container">
+                {% for lesson in lessons %}
+                    <div class="course" onclick="window.location.href='{% url 'lesson_detail' lesson.id %}'">
+                        <div class="course-title">{{ lesson.title }}</div>
+                        <div class="lessons">
+                            <div class="lessons-container">
+                                <div class="lesson">
+                                    <div class="lesson-box">
+                                        <div class="image-placeholder"></div>
+                                        <span class="lesson-title">{{ lesson.description }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </body>
