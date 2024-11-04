@@ -1,119 +1,52 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ lesson.title }}</title>
-    {% comment %} <link rel="stylesheet" href="{% static 'css/main.css' %}"> {% endcomment %}
-    <style>
-        * {
-            box-sizing: border-box; /* Убедитесь, что отступы и границы учитываются в ширине и высоте */
-        }
-
-        html, body {
-            height: 100%; /* Задаем высоту 100% для html и body */
-            margin: 0; /* Убираем отступы */
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #4b0082, #800080); /* Фиолетовый фон */
-            color: white; /* Цвет текста по умолчанию */
-        }
-
-        .sidebar {
-            width: 200px;
-            background: linear-gradient(to bottom, #00ff00, #008000); /* Зеленый градиент */
-            padding: 20px;
-            color: white;
-            height: calc(100vh - 50px); /* Высота боковой панели на 100% высоты экрана */
-            float: left;
-            overflow-y: auto; /* Прокрутка, если контент превышает высоту */
-        }
-
-        .sidebar h1 {
-            text-align: center;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            margin: 10px 0;
-        }
-
-        .sidebar ul li a {
-            color: white; /* Цвет текста для ссылок */
-            text-decoration: none;
-        }
-
-        .sidebar ul li a.active {
-            font-weight: bold;
-        }
-
-        .main-content {
-            margin-left: 220px; /* Отступ для боковой панели */
-            padding: 20px;
-            height: calc(100vh - 50px); /* Высота основного контента с учетом навбара */
-            overflow-y: auto; /* Прокрутка, если контент превышает высоту */
-        }
-
-        button {
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .back-button {
-            background-color: #28a745; /* Зеленый цвет для кнопки "Назад" */
-            margin-bottom: 20px; /* Отступ снизу */
-        }
-
-        .back-button:hover {
-            background-color: #218838; /* Темнее при наведении */
-        }
-
-        .content-section {
-            display: none; /* Скрываем все секции по умолчанию */
-        }
-
-        .active {
-            display: block; /* Показываем только активную секцию */
-        }
-    </style>
+    <link rel="stylesheet" href="{%static 'css/lesson.css'%}">
 </head>
 <body>
     <div class="sidebar">
         <h1>Навигация</h1>
         <ul>
-            <li><a href="#" onclick="showSection('theory')" class="active">Теория</a></li>
-            <li><a href="#" onclick="showSection('test')">Тесты</a></li>
+            {% for theory in theories %}
+                <li><a href="#" onclick="showTheory('theory-{{ theory.id }}')" class="active">{{ theory.title }}</a></li>
+            {% endfor %}
+            {% for test in tests %}
+                <li><a href="#" onclick="showTest('test-{{ test.id }}')">{{ test.title }}</a></li>
+            {% endfor %}
         </ul>
     </div>
     <div class="main-content">
         <button class="back-button" onclick="window.location.href='/'">Назад на главную</button>
         <h2>{{ lesson.title }}</h2>
 
-        <div id="theory" class="content-section active">
-            <h3>Теория</h3>
+        <div id="theories" class="content-section active">
+            <h3>Теории</h3>
             {% for theory in theories %}
-                <p>{{ theory.content }}</p> <!-- Отображаем текст теории -->
+                <div class="theory" id="theory-{{ theory.id }}" style="display: none;">
+                    <h4>{{ theory.title }}</h4>
+                    <p>{{ theory.content }}</p>
+                </div>
             {% endfor %}
         </div>
 
-        <div id="test" class="content-section">
+        <div id="tests" class="content-section">
             <h3>Тесты</h3>
             <form>
                 {% for test in tests %}
-                    <p>{{ test.question }}</p> <!-- Вопрос теста -->
-                    <input type="text" placeholder="Ваш ответ">
+                    <div class="test" id="test-{{ test.id }}" style="display: none;">
+                        <h4>{{ test.title }}</h4> <!-- Название теста -->
+                        <p>{{ test.question }}</p> <!-- Вопрос теста -->
+                        {% for answer in test.answers %}
+                            <div>
+                                <input type="radio" id="answer-{{ test.id }}-{{ forloop.counter }}" name="test-{{ test.id }}" value="{{ answer.text }}">
+                                <label for="answer-{{ test.id }}-{{ forloop.counter }}">{{ answer.text }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
                 {% endfor %}
                 <button type="button" onclick="alert('Ответы отправлены!')">Отправить ответы</button>
             </form>
@@ -121,23 +54,54 @@
     </div>
 
     <script>
-        function showSection(sectionId) {
-            // Скрываем все секции
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(section => {
-                section.classList.remove('active');
+        function showTheory(theoryId) {
+            // Скрываем все теории
+            const theories = document.querySelectorAll('.theory');
+            theories.forEach(theory => {
+                theory.style.display = 'none';
             });
 
-            // Показываем только выбранную секцию
-            const activeSection = document.getElementById(sectionId);
-            activeSection.classList.add('active');
+            // Показываем только выбранную теорию
+            const activeTheory = document.getElementById(theoryId);
+            if (activeTheory) {
+                activeTheory.style.display = 'block';
+            }
 
             // Обновляем активную ссылку в боковой панели
             const links = document.querySelectorAll('.sidebar ul li a');
             links.forEach(link => {
                 link.classList.remove('active');
             });
-            document.querySelector(`a[onclick="showSection('${sectionId}')"]`).classList.add('active');
+            document.querySelector(`a[onclick="showTheory('${theoryId}')"]`).classList.add('active');
+
+            // Убираем активный класс у секции тестов и добавляем к секции теорий
+            document.getElementById('theories').classList.add('active');
+            document.getElementById('tests').classList.remove('active');
+        }
+
+        function showTest(testId) {
+            // Скрываем все тесты
+            const tests = document.querySelectorAll('.test');
+            tests.forEach(test => {
+                test.style.display = 'none';
+            });
+
+            // Показываем только выбранный тест
+            const activeTest = document.getElementById(testId);
+            if (activeTest) {
+                activeTest.style.display = 'block';
+            }
+
+            // Обновляем активную ссылку в боковой панели
+            const links = document.querySelectorAll('.sidebar ul li a');
+            links.forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`a[onclick="showTest('${testId}')"]`).classList.add('active');
+
+            // Убираем активный класс у секции теорий и добавляем к секции тестов
+            document.getElementById('theories').classList.remove('active');
+            document.getElementById('tests').classList.add('active');
         }
     </script>
 </body>
