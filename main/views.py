@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Lesson, Topic, Test, Theory
 from django.http import JsonResponse
 import json
+import ast
 
 def home_view(request):
     # Получаем все темы из базы данных
