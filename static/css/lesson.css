@@ -6,18 +6,19 @@ html, body {
     height: 100%; /* Задаем высоту 100% для html и body */
     margin: 0; /* Убираем отступы */
     font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #4b0082, #800080); /* Фиолетовый фон */
-    color: white; /* Цвет текста по умолчанию */
+    background-color: #1a1a1a;
+    color: #ffffff;
+    min-height: 100vh;
 }
 
 .sidebar {
-    width: 200px;
-    background: linear-gradient(to bottom, #00ff00, #008000); /* Зеленый градиент */
+    width: 250px;
+    background-color: #2d2d2d;
     padding: 20px;
-    color: white;
-    height: calc(100vh - 50px); /* Высота боковой панели на 100% высоты экрана */
+    height: calc(100vh - 50px);
     float: left;
-    overflow-y: auto; /* Прокрутка, если контент превышает высоту */
+    overflow-y: auto;
+    border-right: 1px solid #3d3d3d;
 }
 
 .sidebar h1 {
@@ -34,45 +35,60 @@ html, body {
 }
 
 .sidebar ul li a {
-    color: white; /* Цвет текста для ссылок */
+    color: #ffffff;
     text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: #8a2be2;
 }
 
 .sidebar ul li a.active {
+    background-color: #6a1b9a;
     font-weight: bold;
 }
 
 .main-content {
-    margin-left: 220px; /* Отступ для боковой панели */
-    padding: 20px;
-    height: calc(100vh - 50px); /* Высота основного контента с учетом навбара */
-    overflow-y: auto; /* Прокрутка, если контент превышает высоту */
+    margin-left: 270px;
+    padding: 30px;
+    height: calc(100vh - 50px);
+    overflow-y: auto;
 }
 
 button {
-    padding: 10px 15px;
-    background-color: #007bff;
+    padding: 12px 20px;
+    background-color: #8a2be2;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #6a1b9a;
+    transform: translateY(-2px);
 }
 
 .back-button {
-    background-color: #28a745; /* Зеленый цвет для кнопки "Назад" */
-    margin-bottom: 20px; /* Отступ снизу */
+    background-color: #8a2be2;
+    margin-bottom: 20px;
 }
 
 .back-button:hover {
-    background-color: #218838; /* Темнее при наведении */
+    background-color: #6a1b9a;
 }
 
 .content-section {
-    display: none; /* Скрываем все секции по умолчанию */
+    background: #2d2d2d;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #3d3d3d;
 }
 
 .active {

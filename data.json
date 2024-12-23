@@ -1,300 +1,254 @@
 [
-    {
-        "model": "main.topic",
-        "pk": 1,
-        "fields": {
-            "title": "Программирование",
-            "description": "Основы программирования и его концепции."
-        }
-    },
-    {
-        "model": "main.topic",
-        "pk": 2,
-        "fields": {
-            "title": "Типы данных",
-            "description": "Изучение различных типов данных в программировании."
-        }
-    },
-    {
-        "model": "main.lesson",
-        "pk": 1,
-        "fields": {
-            "title": "Основы программирования",
-            "description": "Введение в программирование.",
-            "topic": 1
-        }
-    },
-    {
-        "model": "main.lesson",
-        "pk": 2,
-        "fields": {
-            "title": "Переменные и типы данных",
-            "description": "Изучение переменных и их типов.",
-            "topic": 2 
-        }
-    },
-    {
-        "model": "main.lesson",
-        "pk": 3,
-        "fields": {
-            "title": "Управляющие конструкции",
-            "description": "Изучение условных операторов и циклов.",
-            "topic": 1
-        }
-    },
-    {
-        "model": "main.lesson",
-        "pk": 4,
-        "fields": {
-            "title": "Функции и модули",
-            "description": "Создание и использование функций.",
-            "topic": 1
-        }
-    },
-    {
-        "model": "main.lesson",
-        "pk": 5,
-        "fields": {
-            "title": "Списки и кортежи",
-            "description": "Работа с коллекциями данных.",
-            "topic": 2
-        }
-    },
-    {
-        "model": "main.lesson",
-        "pk": 6,
-        "fields": {
-            "title": "Словари и множества",
-            "description": "Изучение ассоциативных массивов и множеств.",
-            "topic": 2
-        }
-    },
-    {
-        "model": "main.lesson",
-        "pk": 7,
-        "fields": {
-            "title": "Объектно-ориентированное программирование",
-            "description": "Основы ООП и создание классов.",
-            "topic": 1
-        }
-    },
-    {
-        "model": "main.lesson",
-        "pk": 8,
-        "fields": {
-            "title": "Исключения и обработка ошибок",
-            "description": "Работа с исключениями в Python.",
-            "topic": 1
-        }
-    },
-    {
-        "model": "main.theory",
-        "pk": 1,
-        "fields": {
-            "lesson": 1,
-            "title": "Что такое программирование?",
-            "content": "Программирование — это процесс создания программ, которые выполняют определенные задачи."
-        }
-    },
-    {
-        "model": "main.theory",
-        "pk": 2,
-        "fields": {
-            "lesson": 1,
-            "title": "Основные конструкции языка программирования",
-            "content": "Основные конструкции языка программирования: переменные, операторы, циклы."
-        }
-    },
-    {
-        "model": "main.theory",
-        "pk": 3,
-        "fields": {
-            "lesson": 2,
-            "title": "Переменные и их типы",
-            "content": "Переменные используются для хранения данных. Типы данных определяют, какие значения могут храниться в переменных."
-        }
-    },
-    {
-        "model": "main.theory",
-        "pk": 4,
-        "fields": {
-            "lesson": 3,
-            "title": "Условные операторы",
-            "content": "Условные операторы позволяют выполнять разные действия в зависимости от условий."
-        }
-    },
-    {
-        "model": "main.theory",
-        "pk": 5,
-        "fields": {
-            "lesson": 3,
-            "title": "Циклы",
-            "content": "Циклы позволяют повторять действия несколько раз."
-        }
-    },
-    {
-        "model": "main.theory",
-        "pk": 6,
-        "fields": {
-            "lesson": 4,
-            "title": "Определение функции",
-            "content": "Функция — это блок кода, который выполняет определенную задачу."
-        }
-    },
-    {
-        "model": "main.theory",
-        "pk": 7,
-        "fields": {
-            "lesson": 4,
-            "title": "Параметры функции",
-            "content": "Функции могут принимать параметры для обработки данных."
-        }
-    },
-    {
-        "model": "main.theory",
-        "pk": 8,
-        "fields": {
-            "lesson": 5,
-            "title": "Списки в Python",
-            "content": "Списки — это изменяемые последовательности, которые могут содержать элементы разных типов."
-        }
-    },
-    {
-        "model": "main.theory",
-        "pk": 9,
-        "fields": {
-            "lesson": 5,
-            "title": "Кортежи в Python",
-            "content": "Кортежи — это неизменяемые последовательности, которые могут содержать элементы разных типов."
-        }
-    },
-    {
-        "model": "main.theory",
-        "pk": 10,
-        "fields": {
-            "lesson": 6,
-            "title": "Словари в Python",
-            "content": "Словари — это неупорядоченные коллекции пар ключ-значение."
-        }
-    },
-    {
-        "model": "main.test",
-        "pk": 1,
-        "fields": {
-            "lesson": 1,
-            "title": "Тест по основам программирования",
-            "question": "Что такое программирование?",
-            "answer": [
-                {"text": "Процесс создания программ.", "is_correct": true},
-                {"text": "Процесс тестирования программ.", "is_correct": false},
-                {"text": "Процесс документирования программ.", "is_correct": false},
-                {"text": "Процесс отладки программ.", "is_correct": false}
-            ]
-        }
-    },
-    {
-        "model": "main.test",
-        "pk": 2,
-        "fields": {
-            "lesson": 2,
-            "title": "Тест по переменным",
-            "question": "Что такое переменная?",
-            "answer": [
-                {"text": "Хранит данные.", "is_correct": true},
-                {"text": "Это функция.", "is_correct": false},
-                {"text": "Это класс.", "is_correct": false},
-                {"text": "Это метод.", "is_correct": false}
-            ]
-        }
-    },
-    {
-        "model": "main.test",
-        "pk": 3,
-        "fields": {
-            "lesson": 3,
-            "title": "Тест по управляющим конструкциям",
-            "question": "Какой оператор используется для проверки условий?",
-            "answer": [
-                {"text": "if", "is_correct": true},
-                {"text": "for", "is_correct": false},
-                {"text": "while", "is_correct": false},
-                {"text": "def", "is_correct": false}
-            ]
-        }
-    },
-    {
-        "model": "main.test",
-        "pk": 4,
-        "fields": {
-            "lesson": 4,
-            "title": "Тест по функциям",
-            "question": "Что такое функция?",
-            "answer": [
-                {"text": "Блок кода, выполняющий задачу.", "is_correct": true},
-                {"text": "Переменная.", "is_correct": false},
-                {"text": "Класс.", "is_correct": false},
-                {"text": "Модуль.", "is_correct": false}
-            ]
-        }
-    },
-    {
-        "model": "main.test",
-        "pk": 5,
-        "fields": {
-            "lesson": 5,
-            "title": "Тест по спискам",
-            "question": "Что такое список в Python?",
-            "answer": [
-                {"text": "Изменяемая последовательность.", "is_correct": true},
-                {"text": "Неизменяемая последовательность.", "is_correct": false},
-                {"text": "Словарь.", "is_correct": false},
-                {"text": "Множество.", "is_correct": false}
-            ]
-        }
-    },
-    {
-        "model": "main.test",
-        "pk": 6,
-        "fields": {
-            "lesson": 6,
-            "title": "Тест по словарям",
-            "question": "Что такое словарь в Python?",
-            "answer": [
-                {"text": "Неупорядоченная коллекция пар ключ-значение.", "is_correct": true},
-                {"text": "Упорядоченная коллекция.", "is_correct": false},
-                {"text": "Изменяемая последовательность.", "is_correct": false},
-                {"text": "Неизменяемая последовательность.", "is_correct": false}
-            ]
-        }
-    },
-    {
-        "model": "main.test",
-        "pk": 7,
-        "fields": {
-            "lesson": 7,
-            "title": "Тест по ООП",
-            "question": "Что такое класс?",
-            "answer": [
-                {"text": "Шаблон для создания объектов.", "is_correct": true},
-                {"text": "Функция.", "is_correct": false},
-                {"text": "Переменная.", "is_correct": false},
-                {"text": "Модуль.", "is_correct": false}
-            ]
-        }
-    },
-    {
-        "model": "main.test",
-        "pk": 8,
-        "fields": {
-            "lesson": 8,
-            "title": "Тест по исключениям",
-            "question": "Что такое исключение?",
-            "answer": [
-                {"text": "Ошибка, возникающая во время выполнения.", "is_correct": true},
-                {"text": "Переменная.", "is_correct": false},
-                {"text": "Функция.", "is_correct": false},
-                {"text": "Класс.", "is_correct": false}
-            ]
-        }
+  {
+    "model": "main.topic",
+    "pk": 1,
+    "fields": {
+      "title": "Основы программирования",
+      "description": "Базовые концепции и принципы программирования"
     }
+  },
+  {
+    "model": "main.topic",
+    "pk": 2,
+    "fields": {
+      "title": "Алгоритмы и структуры данных",
+      "description": "Изучение алгоритмов и структур данных"
+    }
+  },
+  {
+    "model": "main.lesson",
+    "pk": 1,
+    "fields": {
+      "title": "Переменные и типы данных",
+      "description": "Изучение основных типов данных и работы с переменными",
+      "topic": 1
+    }
+  },
+  {
+    "model": "main.lesson",
+    "pk": 2,
+    "fields": {
+      "title": "Условные операторы",
+      "description": "Изучение условных конструкций if-else",
+      "topic": 1
+    }
+  },
+  {
+    "model": "main.theory",
+    "pk": 1,
+    "fields": {
+      "lesson": 1,
+      "title": "Что такое переменные",
+      "content": "Переменная - это именованная область памяти, которая хранит значение определенного типа..."
+    }
+  },
+  {
+    "model": "main.theory",
+    "pk": 2,
+    "fields": {
+      "lesson": 1,
+      "title": "Основные типы данных",
+      "content": "В программировании существуют следующие основные типы данных: целые числа (int), числа с плавающей точкой (float)..."
+    }
+  },
+  {
+    "model": "main.question",
+    "pk": 1,
+    "fields": {
+      "lesson": 1,
+      "text": "Что такое переменная?",
+      "question_type": "single",
+      "explanation": "Переменная - это именованная область памяти для хранения данных",
+      "created_at": "2024-01-01T12:00:00Z",
+      "updated_at": "2024-01-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "main.answer",
+    "pk": 1,
+    "fields": {
+      "question": 1,
+      "text": "Именованная область памяти",
+      "is_correct": true,
+      "explanation": "Это правильное определение переменной"
+    }
+  },
+  {
+    "model": "main.answer",
+    "pk": 2,
+    "fields": {
+      "question": 1,
+      "text": "Математическое выражение",
+      "is_correct": false,
+      "explanation": "Это не определение переменной"
+    }
+  },
+  {
+    "model": "main.question",
+    "pk": 2,
+    "fields": {
+      "lesson": 1,
+      "text": "Выберите все числовые типы данных",
+      "question_type": "multiple",
+      "explanation": "Числовые типы данных используются для хранения чисел",
+      "created_at": "2024-01-01T12:00:00Z",
+      "updated_at": "2024-01-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "main.answer",
+    "pk": 3,
+    "fields": {
+      "question": 2,
+      "text": "int",
+      "is_correct": true,
+      "explanation": "Целочисленный тип"
+    }
+  },
+  {
+    "model": "main.answer",
+    "pk": 4,
+    "fields": {
+      "question": 2,
+      "text": "float",
+      "is_correct": true,
+      "explanation": "Число с плавающей точкой"
+    }
+  },
+  {
+    "model": "main.answer",
+    "pk": 5,
+    "fields": {
+      "question": 2,
+      "text": "str",
+      "is_correct": false,
+      "explanation": "Строковый тип, не числовой"
+    }
+  },
+  {
+    "model": "main.question",
+    "pk": 3,
+    "fields": {
+      "lesson": 1,
+      "text": "Расположите этапы компиляции в правильном порядке",
+      "question_type": "ordering",
+      "explanation": "Процесс компиляции состоит из нескольких последовательных этапов",
+      "created_at": "2024-01-01T12:00:00Z",
+      "updated_at": "2024-01-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "main.answer",
+    "pk": 6,
+    "fields": {
+      "question": 3,
+      "text": "Лексический анализ",
+      "order": 1
+    }
+  },
+  {
+    "model": "main.answer",
+    "pk": 7,
+    "fields": {
+      "question": 3,
+      "text": "Синтаксический анализ",
+      "order": 2
+    }
+  },
+  {
+    "model": "main.answer",
+    "pk": 8,
+    "fields": {
+      "question": 3,
+      "text": "Генерация кода",
+      "order": 3
+    }
+  },
+  {
+    "model": "main.question",
+    "pk": 4,
+    "fields": {
+      "lesson": 1,
+      "text": "Сопоставьте типы данных и их описания",
+      "question_type": "matching",
+      "explanation": "Каждый тип данных имеет свое назначение",
+      "created_at": "2024-01-01T12:00:00Z",
+      "updated_at": "2024-01-01T12:00:00Z",
+      "additional_data": {
+        "pairs": [
+          {"left": "int", "right": "целые числа"},
+          {"left": "float", "right": "дробные числа"},
+          {"left": "str", "right": "текстовые данные"}
+        ]
+      }
+    }
+  },
+  {
+    "model": "main.question",
+    "pk": 5,
+    "fields": {
+      "lesson": 1,
+      "text": "Перетащите элементы блок-схемы в правильные места",
+      "question_type": "drag_drop",
+      "explanation": "Блок-схема должна отражать правильный порядок выполнения операций",
+      "created_at": "2024-01-01T12:00:00Z",
+      "updated_at": "2024-01-01T12:00:00Z",
+      "additional_data": {
+        "drop_zones": [
+          {"id": 1, "x": 100, "y": 100},
+          {"id": 2, "x": 200, "y": 200},
+          {"id": 3, "x": 300, "y": 300}
+        ]
+      }
+    }
+  },
+  {
+    "model": "main.answer",
+    "pk": 9,
+    "fields": {
+      "question": 5,
+      "text": "Начало",
+      "position_data": {"x": 100, "y": 100}
+    }
+  },
+  {
+    "model": "main.answer",
+    "pk": 10,
+    "fields": {
+      "question": 5,
+      "text": "Процесс",
+      "position_data": {"x": 200, "y": 200}
+    }
+  },
+  {
+    "model": "main.answer",
+    "pk": 11,
+    "fields": {
+      "question": 5,
+      "text": "Конец",
+      "position_data": {"x": 300, "y": 300}
+    }
+  },
+  {
+    "model": "main.question",
+    "pk": 6,
+    "fields": {
+      "lesson": 1,
+      "text": "Напишите название функции для вывода текста в Python",
+      "question_type": "text",
+      "explanation": "Функция print() используется для вывода текста",
+      "created_at": "2024-01-01T12:00:00Z",
+      "updated_at": "2024-01-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "main.answer",
+    "pk": 12,
+    "fields": {
+      "question": 6,
+      "text": "print",
+      "is_correct": true,
+      "explanation": "print() - стандартная функция вывода в Python"
+    }
+  }
 ]

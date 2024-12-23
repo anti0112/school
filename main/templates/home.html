@@ -6,24 +6,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная страница</title>
-    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
-    <style>
-        .lessons-container {
-            display: none; /* Скрываем контейнер с уроками по умолчанию */
-        }
-        .active {
-            display: flex; /* Показываем контейнер с уроками, если он активен */
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}?v=3">
 </head>
 <body>
     <div class="content-wrapper">
         <div class="sidebar">
             <div class="profile">
-                <div class="profile-icon"></div> <!-- Кружок профиля -->
+                <div class="profile-icon"></div>
                 <div class="user-info">
-                    <span>Даниил Галкина</span><br><!-- Имя пользователя -->
-                    <span style="margin-left: 10px;">EXP: 1200</span> <!-- Очки -->
+                    {{ user.username }}<br>
+                    EXP: 1200
                 </div>
             </div>
             <div class="stats">
@@ -35,57 +27,51 @@
             <div class="navigation">
                 <a href="{% url 'home' %}" class="active">Главная</a>
                 <a href="{% url 'create_lesson' %}">Добавить новый урок</a>
+                <a href="#" class="logout">Выход</a>
             </div>
-            <a href="#" class="logout">Выход</a> <!-- Кнопка выхода -->
         </div>
+        
         <div class="main-content">
             <h1>Темы и Уроки</h1>
             <div class="courses-container">
                 {% for topic in topics %}
-                    <div class="course">
-                        <div class="course-title" onclick="toggleLessons('lessons-{{ topic.id }}')">
-                            {{ topic.title }}
-                        </div>
-                        <div class="lessons-container" id="lessons-{{ topic.id }}">
-                            <div class="lessons">
-                                {% for lesson in topic.lessons.all %}
-                                    <div class="lesson">
-                                        <div class="lesson-box">
-                                            <div class="image-placeholder"></div>
-                                            <span class="lesson-title">
-                                                <a href="{% url 'lesson_detail' lesson.id %}">{{ lesson.title }}</a>
-                                            </span>
-                                        </div>
+                <div class="course">
+                    <div class="course-title" onclick="toggleLessons('lessons-{{ topic.id }}')">
+                        {{ topic.title }}
+                    </div>
+                    <div class="lessons" id="lessons-{{ topic.id }}">
+                        <div class="lessons-container">
+                            {% for lesson in topic.lessons.all %}
+                            <div class="lesson">
+                                <div class="lesson-box">
+                                    <div class="image-placeholder"></div>
+                                    <div class="lesson-title">
+                                        <a href="{% url 'lesson_detail' lesson.id %}">{{ lesson.title }}</a>
                                     </div>
-                                {% empty %}
-                                    <p>Нет доступных уроков для этой темы.</p>
-                                {% endfor %}
+                                </div>
                             </div>
+                            {% empty %}
+                            <p>Нет доступных уроков для этой темы.</p>
+                            {% endfor %}
                         </div>
                     </div>
+                </div>
                 {% empty %}
-                    <p>Нет доступных тем.</p>
+                <p>Нет доступных тем.</p>
                 {% endfor %}
             </div>
         </div>
     </div>
 
     <script>
-        function toggleLessons(lessonsId) {
-            console.log("Toggling lessons for:", lessonsId); // Отладочный вывод
-            const lessonsContainer = document.getElementById(lessonsId);
-            const lessons = lessonsContainer.querySelector('.lessons'); // Получаем элемент с классом .lessons
-            const currentDisplay = window.getComputedStyle(lessonsContainer).display; // Получаем текущее значение display
-            console.log("Current display state:", currentDisplay); // Отладочный вывод
-        
-            if (currentDisplay === "none") {
-                lessonsContainer.style.display = "block"; // Показываем контейнер
-                lessons.style.display = "flex"; // Показываем уроки
-            } else {
-                lessonsContainer.style.display = "none"; // Скрываем контейнер
-                lessons.style.display = "flex"; // Скрываем уроки
-            }
+    function toggleLessons(lessonsId) {
+        const lessonsElement = document.getElementById(lessonsId);
+        if (lessonsElement.style.display === "none" || lessonsElement.style.display === "") {
+            lessonsElement.style.display = "block";
+        } else {
+            lessonsElement.style.display = "none";
         }
+    }
     </script>
 </body>
 </html>

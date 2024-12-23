@@ -229,12 +229,28 @@
             newAnswer.innerHTML = `
                 <input type="text" name="answers[${testIndex}][]" placeholder="Введите ответ...">
                 <label class="correct-answer">
-                    <input type="radio" name="correct-answer-${testIndex}" value="${testIndex}"> Верный
+                    <input type="checkbox" name="correct-answers[${testIndex}][]" value="${testIndex}"> Верный
                 </label>
                 <button type='button' class="remove-button" onclick="removeAnswer(this)">Удалить</button>
             `;
             
             answersContainer.appendChild(newAnswer);
+        }
+
+        function validateAnswers(testIndex) {
+            const checkboxes = document.querySelectorAll(`input[name="correct-answers[${testIndex}][]"]`);
+            const checkedCount = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+
+            if (checkedCount > 1) {
+                // Если отмечено несколько ответов, можно добавить логику для обработки
+                console.log('Несколько верных ответов выбрано.');
+            } else if (checkedCount === 1) {
+                // Если отмечен один ответ
+                console.log('Один верный ответ выбран.');
+            } else {
+                // Если не отмечено ни одного ответа
+                console.log('Нет верных ответов.');
+            }
         }
 
         function removeAnswer(button) {

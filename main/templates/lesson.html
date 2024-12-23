@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ lesson.title }}</title>
-    <link rel="stylesheet" href="{%static 'css/lesson.css'%}">
+    <link rel="stylesheet" href="{% static 'css/lesson.css' %}">
 </head>
 <body>
     <div class="sidebar">
@@ -35,20 +35,24 @@
 
         <div id="tests" class="content-section">
             <h3>Тесты</h3>
-            <form>
+            <form id="test-form">
                 {% for test in tests %}
                     <div class="test" id="test-{{ test.id }}" style="display: none;">
                         <h4>{{ test.title }}</h4> <!-- Название теста -->
                         <p>{{ test.question }}</p> <!-- Вопрос теста -->
                         {% for answer in test.answers %}
                             <div>
-                                <input type="radio" id="answer-{{ test.id }}-{{ forloop.counter }}" name="test-{{ test.id }}" value="{{ answer.text }}">
+                                <input type="checkbox" id="answer-{{ test.id }}-{{ forloop.counter }}" name="test-{{ test.id }}" value="{{ answer.id }}">
                                 <label for="answer-{{ test.id }}-{{ forloop.counter }}">{{ answer.text }}</label>
+                                {% if answer.is_correct %}
+                                    <span class="correct-indicator" style="display:none;">(Верный)</span>
+                                {% endif %}
                             </div>
                         {% endfor %}
+                        <p id="result-message-{{ test.id }}" class="result-message"></p>
                     </div>
                 {% endfor %}
-                <button type="button" onclick="alert('Ответы отправлены!')">Отправить ответы</button>
+                <button type="button" onclick="submitAnswers()">Отправить ответы</button>
             </form>
         </div>
     </div>
@@ -102,6 +106,36 @@
             // Убираем активный класс у секции теорий и добавляем к секции тестов
             document.getElementById('theories').classList.remove('active');
             document.getElementById('tests').classList.add('active');
+        }
+
+        function submitAnswers() {
+            const formData = new FormData(document.getElementById('test-form'));
+            const answers = {};
+            formData.forEach((value, key) => {
+                if (!answers[key]) {
+                    answers[key] = [];
+                }
+                answers[key].push(value);
+            });
+
+            fetch('/api/check-answers/', { // Укажите ваш эндпоинт
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}' // Добавьте CSRF-токен, если используете Django
+                },
+                body: JSON.stringify(answers)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Обработка ответа от сервера
+                console.log(data);
+                // Вы можете обновить интерфейс в зависимости от ответа
+                alert(data.message); // Предполагается, что сервер возвращает сообщение
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
         }
     </script>
 </body>
