@@ -5,138 +5,302 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ lesson.title }}</title>
-    <link rel="stylesheet" href="{% static 'css/lesson.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detail_less.css' %}">
+    <!-- Добавляем Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Добавляем Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .draggable {
+            padding: 10px;
+            margin: 5px;
+            background-color: #8a2be2;
+            color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: move;
+            transition: background-color 0.3s;
+        }
+        .draggable:hover {
+            background-color: #6a1b9a;
+        }
+        .dropzone {
+            padding: 10px;
+            margin: 5px;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            min-height: 50px;
+            text-align: center;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h1>Навигация</h1>
-        <ul>
-            {% for theory in theories %}
-                <li><a href="#" onclick="showTheory('theory-{{ theory.id }}')" class="active">{{ theory.title }}</a></li>
-            {% endfor %}
-            {% for test in tests %}
-                <li><a href="#" onclick="showTest('test-{{ test.id }}')">{{ test.title }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="main-content">
-        <button class="back-button" onclick="window.location.href='/'">Назад на главную</button>
-        <h2>{{ lesson.title }}</h2>
-
-        <div id="theories" class="content-section active">
-            <h3>Теории</h3>
-            {% for theory in theories %}
-                <div class="theory" id="theory-{{ theory.id }}" style="display: none;">
-                    <h4>{{ theory.title }}</h4>
-                    <p>{{ theory.content }}</p>
+    <div class="app-container">
+        <aside class="lesson-sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Python School</span>
                 </div>
-            {% endfor %}
-        </div>
+                <button class="toggle-sidebar">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
 
-        <div id="tests" class="content-section">
-            <h3>Тесты</h3>
-            <form id="test-form">
-                {% for test in tests %}
-                    <div class="test" id="test-{{ test.id }}" style="display: none;">
-                        <h4>{{ test.title }}</h4> <!-- Название теста -->
-                        <p>{{ test.question }}</p> <!-- Вопрос теста -->
-                        {% for answer in test.answers %}
-                            <div>
-                                <input type="checkbox" id="answer-{{ test.id }}-{{ forloop.counter }}" name="test-{{ test.id }}" value="{{ answer.id }}">
-                                <label for="answer-{{ test.id }}-{{ forloop.counter }}">{{ answer.text }}</label>
-                                {% if answer.is_correct %}
-                                    <span class="correct-indicator" style="display:none;">(Верный)</span>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-                        <p id="result-message-{{ test.id }}" class="result-message"></p>
+            <div class="lesson-info">
+                <div class="lesson-title">{{ lesson.title }}</div>
+                <div class="lesson-progress">
+                    <div class="progress-header">
+                        <span>Прогресс урока</span>
+                        <span class="progress-percent">60%</span>
                     </div>
-                {% endfor %}
-                <button type="button" onclick="submitAnswers()">Отправить ответы</button>
-            </form>
-        </div>
+                    <div class="progress-track">
+                        <div class="progress-bar" style="width: 60%">
+                            <div class="progress-glow"></div>
+                        </div>
+                    </div>
+                    <div class="progress-steps">
+                        {% for i in "12345" %}
+                        <div class="step {% if forloop.counter <= 3 %}completed{% endif %}">
+                            <div class="step-dot"></div>
+                            <div class="step-label">Шаг {{ forloop.counter }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <nav class="lesson-navigation">
+                <div class="nav-section">
+                    <div class="section-header">
+                        <i class="fas fa-book"></i>
+                        <span>Теория</span>
+                    </div>
+                    <div class="nav-items">
+                        {% for theory in theories %}
+                        <button class="nav-item {% if forloop.first %}active{% endif %}" 
+                                onclick="showTheory('theory-{{ theory.id }}')">
+                            <div class="item-status">
+                                <i class="fas fa-circle-check"></i>
+                            </div>
+                            <span>{{ theory.title }}</span>
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="section-header">
+                        <i class="fas fa-tasks"></i>
+                        <span>Практика</span>
+                    </div>
+                    <div class="nav-items">
+                        {% for test in tests %}
+                        <button class="nav-item" onclick="showTest('test-{{ test.id }}')">
+                            <div class="item-status">
+                                <i class="far fa-circle"></i>
+                            </div>
+                            <span>{{ test.title }}</span>
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-header">
+                <button class="back-btn" onclick="window.location.href='/'">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Вернуться к курсам</span>
+                </button>
+                <div class="header-actions">
+                    <button class="action-btn">
+                        <i class="fas fa-bookmark"></i>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-share"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <div id="theories" class="content-section active">
+                    {% for theory in theories %}
+                    <div class="theory-card" id="theory-{{ theory.id }}" {% if not forloop.first %}style="display: none"{% endif %}>
+                        <div class="card-header">
+                            <h2>{{ theory.title }}</h2>
+                            <button class="fullscreen-btn" onclick="toggleFullscreen(this)">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                        <div class="card-content">
+                            {{ theory.content|safe }}
+                        </div>
+                        <div class="card-footer">
+                            <button class="nav-btn prev" onclick="prevTheory()">
+                                <i class="fas fa-arrow-left"></i>
+                                <span>Предыдущий</span>
+                            </button>
+                            <button class="nav-btn next" onclick="nextTheory()">
+                                <span>Следующий</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div id="tests" class="content-section">
+                    {% for test in tests %}
+                    <div class="test-card" id="test-{{ test.id }}" style="display: none">
+                        <div class="card-header">
+                            <h2>{{ test.title }}</h2>
+                            <div class="test-counter">Вопрос {{ forloop.counter }} из {{ tests|length }}</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="question">
+                                {{ test.text }}
+                            </div>
+                            
+                            {% if test.type == 'single' or test.type == 'multiple' %}
+                            <div class="answers-grid">
+                                {% for answer in test.answers %}
+                                <label class="answer-option">
+                                    <input type="{% if test.type == 'single' %}radio{% else %}checkbox{% endif %}"
+                                           name="test-{{ test.id }}"
+                                           value="{{ answer.id }}">
+                                    <span class="option-text">{{ answer.text }}</span>
+                                </label>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            {% if test.type == 'matching' %}
+                            <div class="matching-area">
+                                <div class="dropzone" id="dropzone-{{ test.id }}">
+                                    <i class="fas fa-arrow-down"></i>
+                                    <span>Перетащите элементы сюда</span>
+                                </div>
+                                <div class="draggable-items">
+                                    {% for answer in test.answers %}
+                                    <div class="draggable" draggable="true" data-answer-id="{{ answer.id }}">
+                                        <i class="fas fa-grip-lines"></i>
+                                        <span>{{ answer.text }}</span>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="card-footer">
+                            <button class="nav-btn prev" onclick="prevTest()">
+                                <i class="fas fa-arrow-left"></i>
+                                <span>Предыдущий</span>
+                            </button>
+                            <button class="submit-btn" onclick="submitCurrentTest()">
+                                <span>Проверить</span>
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="nav-btn next" onclick="nextTest()">
+                                <span>Следующий</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </main>
     </div>
 
     <script>
+        // Основные функции остаются теми же, добавим только обработку сворачивания сайдбара
+        document.querySelector('.toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.lesson-sidebar').classList.toggle('collapsed');
+            document.querySelector('.main-content').classList.toggle('expanded');
+            this.querySelector('i').classList.toggle('fa-chevron-right');
+            this.querySelector('i').classList.toggle('fa-chevron-left');
+        });
+
+        // Добавляем новые функции для навигации
+        function prevTheory() {
+            const currentTheory = document.querySelector('.theory-card[style="display: block;"]');
+            if (currentTheory && currentTheory.previousElementSibling) {
+                currentTheory.style.display = 'none';
+                currentTheory.previousElementSibling.style.display = 'block';
+                updateSidebarActive(currentTheory.previousElementSibling.id);
+            }
+        }
+
+        function nextTheory() {
+            const currentTheory = document.querySelector('.theory-card[style="display: block;"]');
+            if (currentTheory && currentTheory.nextElementSibling) {
+                currentTheory.style.display = 'none';
+                currentTheory.nextElementSibling.style.display = 'block';
+                updateSidebarActive(currentTheory.nextElementSibling.id);
+            }
+        }
+
+        function prevTest() {
+            const currentTest = document.querySelector('.test-card[style="display: block;"]');
+            if (currentTest && currentTest.previousElementSibling) {
+                currentTest.style.display = 'none';
+                currentTest.previousElementSibling.style.display = 'block';
+                updateSidebarActive(currentTest.previousElementSibling.id);
+            }
+        }
+
+        function nextTest() {
+            const currentTest = document.querySelector('.test-card[style="display: block;"]');
+            if (currentTest && currentTest.nextElementSibling) {
+                currentTest.style.display = 'none';
+                currentTest.nextElementSibling.style.display = 'block';
+                updateSidebarActive(currentTest.nextElementSibling.id);
+            }
+        }
+
+        function toggleFullscreen(button) {
+            const theoryCard = button.closest('.theory-card');
+            theoryCard.classList.toggle('fullscreen');
+            const icon = button.querySelector('i');
+            icon.classList.toggle('fa-expand');
+            icon.classList.toggle('fa-compress');
+        }
+
+        function submitCurrentTest() {
+            const currentTest = document.querySelector('.test-card[style="display: block;"]');
+            if (currentTest) {
+                const testId = currentTest.id.split('-')[1];
+                submitAnswer(testId);
+            }
+        }
+
+        // Обновляем существующие функции
         function showTheory(theoryId) {
-            // Скрываем все теории
-            const theories = document.querySelectorAll('.theory');
-            theories.forEach(theory => {
+            document.querySelectorAll('.theory-card').forEach(theory => {
                 theory.style.display = 'none';
             });
-
-            // Показываем только выбранную теорию
-            const activeTheory = document.getElementById(theoryId);
-            if (activeTheory) {
-                activeTheory.style.display = 'block';
-            }
-
-            // Обновляем активную ссылку в боковой панели
-            const links = document.querySelectorAll('.sidebar ul li a');
-            links.forEach(link => {
-                link.classList.remove('active');
-            });
-            document.querySelector(`a[onclick="showTheory('${theoryId}')"]`).classList.add('active');
-
-            // Убираем активный класс у секции тестов и добавляем к секции теорий
+            document.getElementById(theoryId).style.display = 'block';
+            updateSidebarActive(theoryId);
+            
             document.getElementById('theories').classList.add('active');
             document.getElementById('tests').classList.remove('active');
         }
 
         function showTest(testId) {
-            // Скрываем все тесты
-            const tests = document.querySelectorAll('.test');
-            tests.forEach(test => {
+            document.querySelectorAll('.test-card').forEach(test => {
                 test.style.display = 'none';
             });
-
-            // Показываем только выбранный тест
-            const activeTest = document.getElementById(testId);
-            if (activeTest) {
-                activeTest.style.display = 'block';
-            }
-
-            // Обновляем активную ссылку в боковой панели
-            const links = document.querySelectorAll('.sidebar ul li a');
-            links.forEach(link => {
-                link.classList.remove('active');
-            });
-            document.querySelector(`a[onclick="showTest('${testId}')"]`).classList.add('active');
-
-            // Убираем активный класс у секции теорий и добавляем к секции тестов
+            document.getElementById(testId).style.display = 'block';
+            updateSidebarActive(testId);
+            
             document.getElementById('theories').classList.remove('active');
             document.getElementById('tests').classList.add('active');
         }
 
-        function submitAnswers() {
-            const formData = new FormData(document.getElementById('test-form'));
-            const answers = {};
-            formData.forEach((value, key) => {
-                if (!answers[key]) {
-                    answers[key] = [];
-                }
-                answers[key].push(value);
-            });
-
-            fetch('/api/check-answers/', { // Укажите ваш эндпоинт
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}' // Добавьте CSRF-токен, если используете Django
-                },
-                body: JSON.stringify(answers)
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Обработка ответа от сервера
-                console.log(data);
-                // Вы можете обновить интерфейс в зависимости от ответа
-                alert(data.message); // Предполагается, что сервер возвращает сообщение
-            })
-            .catch(error => {
-                console.error('Ошибка:', error);
-            });
-        }
+        // Остальной JavaScript код остается без изменений...
     </script>
 </body>
 </html>

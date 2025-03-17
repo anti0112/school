@@ -5,73 +5,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
-    <link rel="stylesheet" href="{% static 'css/menu.css' %}?v=3">
+    <title>Python School - Главная</title>
+    <link rel="stylesheet" href="{% static 'css/lesson.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="content-wrapper">
-        <div class="sidebar">
-            <div class="profile">
-                <div class="profile-icon"></div>
-                <div class="user-info">
-                    {{ user.username }}<br>
-                    EXP: 1200
-                </div>
-            </div>
-            <div class="stats">
-                <h3>Статистика задач</h3>
-                <p>Выполненные: <span class="completed">5</span></p>
-                <p>В процессе: <span class="in-progress">3</span></p>
-                <p>Просроченные: <span class="overdue">1</span></p>
-            </div>
-            <div class="navigation">
-                <a href="{% url 'home' %}" class="active">Главная</a>
-                <a href="{% url 'create_lesson' %}">Добавить новый урок</a>
-                <a href="#" class="logout">Выход</a>
-            </div>
+    <div class="sidebar">
+        <div class="sidebar-toggle">
+            <button id="toggleSidebar">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
         
-        <div class="main-content">
-            <h1>Темы и Уроки</h1>
-            <div class="courses-container">
-                {% for topic in topics %}
-                <div class="course">
-                    <div class="course-title" onclick="toggleLessons('lessons-{{ topic.id }}')">
-                        {{ topic.title }}
-                    </div>
-                    <div class="lessons" id="lessons-{{ topic.id }}">
-                        <div class="lessons-container">
-                            {% for lesson in topic.lessons.all %}
-                            <div class="lesson">
-                                <div class="lesson-box">
-                                    <div class="image-placeholder"></div>
-                                    <div class="lesson-title">
-                                        <a href="{% url 'lesson_detail' lesson.id %}">{{ lesson.title }}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            {% empty %}
-                            <p>Нет доступных уроков для этой темы.</p>
-                            {% endfor %}
-                        </div>
+        <div class="sidebar-header">
+            <h1><i class="fas fa-graduation-cap"></i> <span class="sidebar-text">Python School</span></h1>
+        </div>
+        
+        <div class="user-profile">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="profile-info">
+                    <h3>{{ user.username }}</h3>
+                    <div class="exp-bar">
+                        <div class="exp-fill" style="width: 60%"></div>
+                        <span class="exp-text">1200 EXP</span>
                     </div>
                 </div>
-                {% empty %}
-                <p>Нет доступных тем.</p>
-                {% endfor %}
             </div>
+            
+            <div class="profile-stats">
+                <div class="stat-row">
+                    <div class="stat-icon completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value">5</span>
+                        <span class="stat-label">Выполнено</span>
+                    </div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-icon in-progress">
+                        <i class="fas fa-spinner"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value">3</span>
+                        <span class="stat-label">В процессе</span>
+                    </div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-icon overdue">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value">1</span>
+                        <span class="stat-label">Просрочено</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <a href="{% url 'home' %}" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Главная</span>
+                </a>
+                <a href="{% url 'create_lesson' %}" class="nav-item">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Создать урок</span>
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <a href="#" class="nav-item">
+                    <i class="fas fa-trophy"></i>
+                    <span>Достижения</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-book-reader"></i>
+                    <span>Мои курсы</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Настройки</span>
+                </a>
+            </div>
+
+            <div class="nav-group-bottom">
+                <a href="#" class="nav-item logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Выход</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-header">
+                <h1>Изучение Python</h1>
+                <p class="subtitle">Выберите тему для изучения</p>
+            </div>
+            <div class="actions-bar">
+                <div class="search-wrapper">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Поиск уроков...">
+                    </div>
+                    <div class="search-filters">
+                        <button class="filter-button">
+                            <i class="fas fa-filter"></i>
+                            Фильтры
+                        </button>
+                        <button class="filter-button">
+                            <i class="fas fa-sort"></i>
+                            Сортировка
+                        </button>
+                    </div>
+                </div>
+                <button class="create-button" onclick="window.location.href='{% url 'create_lesson' %}'">
+                    <i class="fas fa-plus"></i>
+                    Новый урок
+                </button>
+            </div>
+        </div>
+
+        <div class="topics-grid">
+            {% for topic in topics %}
+            <div class="topic-card">
+                <div class="topic-header" onclick="toggleLessons('lessons-{{ topic.id }}')">
+                    <h2><i class="fas fa-book"></i> {{ topic.title }}</h2>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="lessons-grid" id="lessons-{{ topic.id }}">
+                    {% for lesson in topic.lessons.all %}
+                    <div class="lesson-card">
+                        <div class="lesson-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="lesson-info">
+                            <h3>{{ lesson.title }}</h3>
+                            <div class="lesson-meta">
+                                <span><i class="fas fa-clock"></i> 30 мин</span>
+                                <span><i class="fas fa-star"></i> Начальный</span>
+                            </div>
+                            <a href="{% url 'lesson_view' lesson.id %}" class="start-button">
+                                Начать <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="empty-state">
+                        <i class="fas fa-folder-open"></i>
+                        <p>Нет доступных уроков</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+                <i class="fas fa-books"></i>
+                <p>Нет доступных тем</p>
+            </div>
+            {% endfor %}
         </div>
     </div>
 
     <script>
     function toggleLessons(lessonsId) {
         const lessonsElement = document.getElementById(lessonsId);
-        if (lessonsElement.style.display === "none" || lessonsElement.style.display === "") {
-            lessonsElement.style.display = "block";
+        const topicCard = lessonsElement.closest('.topic-card');
+        const toggleIcon = topicCard.querySelector('.toggle-icon');
+        
+        if (lessonsElement.style.maxHeight) {
+            lessonsElement.style.maxHeight = null;
+            toggleIcon.style.transform = 'rotate(0deg)';
         } else {
-            lessonsElement.style.display = "none";
+            lessonsElement.style.maxHeight = lessonsElement.scrollHeight + "px";
+            toggleIcon.style.transform = 'rotate(180deg)';
         }
     }
+
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+    const toggleBtn = document.getElementById('toggleSidebar');
+    const sidebarTexts = document.querySelectorAll('.sidebar-text');
+
+    toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+        mainContent.classList.toggle('expanded');
+        
+        toggleBtn.querySelector('i').classList.toggle('fa-bars');
+        toggleBtn.querySelector('i').classList.toggle('fa-times');
+    });
     </script>
 </body>
 </html>
